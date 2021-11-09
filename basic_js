@@ -1,0 +1,190 @@
+Math.pow(3,2);     //9
+Math.round(10.6);  //11
+Math.ceil(10.2);   //11
+Math.floor(10.6);  //10
+Math.sqrt(9);      //3
+Math.random();     //0 ~ 1.0의 random 
+
+alert("codinge everybody");
+
+alert(typeof "1")                 // string
+alert(typeof 1)                   // number
+
+alert('egoing\'s javascript')     // 이스케이프
+alert("coding" + " everybody")
+
+alert("coding".length)            // 6
+
+var first = "coding";
+alert(first+" everybody");
+JavaScript에서는 세미콜론 생략 가능, 이 경우 줄바꿈을 명령의 끝으로 간주
+
+대입 = / 동등 ==
+일치 연산자 === (정확하게 값이 같다)
+alert(1==='1');            //false
+alert(null == undefined);  //true
+alert(null === undefined);  //false
+null - 값이 없음 / undefined - 값이 없는 상태
+
+!== (정확하게 같지 않다)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+    <script> // js로 작성
+        id = prompt('아이디를 입력해주세요.') // 입력받는 창
+        if(id=='egoing'){
+            alert('아이디가 일치 합니다.')
+        } else {
+            alert('아이디가 일치하지 않습니다.')
+        }
+    </script>
+</body>
+</html>
+
+논리 연산자 
+&& || !
+
+false : 0       true : 1
+
+false로 간주되는 데이터형
+'' undefined 초기화안된 변수(a) null NaN
+if(!''){ 
+    alert('빈 문자열')
+}
+if(!undefined){
+    alert('undefined');
+}
+var a;
+if(!a){
+    alert('값이 할당되지 않은 변수'); 
+}
+if(!null){
+    alert('null');
+}
+if(!NaN){
+    alert('NaN');
+}
+
+
+var i = 0;
+// 종료조건으로 i의 값이 10보다 작다면 true, 같거나 크다면 false가 된다.
+while(i < 10){
+    // 반복이 실행될 때마다 coding everybody <br />이 출력된다. <br /> 줄바꿈을 의미하는 HTML 태그
+    console.log('coding everybody <br />');
+    // i의 값이 1씩 증가한다.
+    i++
+}
+
+for(var i = 0; i < 10; i++){
+    console.log('coding everybody'+i+'<br />');
+}; 
+
+
+break;  // 중단
+continue; // 해당 값 범위 빼고 지속
+
+// 0부터 9까지 변수 i에 순차적으로 값을 할당        
+for(var i = 0; i < 10; i++){
+    // 0부터 9까지의 변수를 j의 값에 순차적으로 할당
+    for(var j = 0; j < 10; j++){    
+        // i와 j의 값을 더한 후에 출력
+        // String은 숫자인 i와 j의 데이터 타입을 문자로 형태를 변환하는 명령이다. 
+        console.log(String(i)+String(j)+'<br />');
+    }
+}
+
+함수
+function get_member1(){
+    return 'egoing';
+}
+ 
+alert(get_member1());
+
+** 같은 함수의 다른 정의 방법
+var numbering = function (){
+    i = 0;
+    while(i < 10){
+        console.log(i);
+        i += 1;
+    }   
+}
+numbering();
+
+
+function numbering(){
+    i = 0;
+    while(i < 10){
+        console.log(i);
+        i += 1;
+    }   
+}
+numbering();
+
+배열
+var member = ['egoing', 'k8805', 'sorialgi']
+alert(member[0]); //egoing
+
+
+// 동일
+var members = function(){
+    return ['egoing', 'k8805', 'sorialgi'];
+}
+
+console.log(members()[0]);
+console.log(members()[1]);
+console.log(members()[2]);
+
+function get_members(){
+    return ['egoing', 'k8805', 'sorialgi'];
+}
+var members = get_members();
+console.log(members[0]);
+console.log(members[1]);
+console.log(members[2]);
+
+function get_members(){
+    return ['egoing', 'k8805', 'sorialgi'];
+}
+members = get_members();
+// members.length는 배열에 담긴 값의 개수를 알려준다. 
+for(i = 0; i < members.length; i++){
+    // members[i].toUpperCase()는 members[i]에 담긴 문자를 대문자로 변환해준다.
+    console.log(members[i].toUpperCase());   
+    console.log('<br />');
+}
+
+var li = ['a', 'b', 'c', 'd', 'e']; // a b c d e f
+li.push('f');
+alert(li);
+
+var li = ['a', 'b', 'c', 'd', 'e']; // a b c d e f g
+li = li.concat(['f', 'g']);
+alert(li);
+
+var li = ['a', 'b', 'c', 'd', 'e']; // z a b c d e
+li.unshift('z');
+alert(li);
+
+var li = ['a', 'b', 'c', 'd', 'e']; // a b B c d e
+li.splice(2, 0, 'B');
+alert(li);
+
+var li = ['a', 'b', 'c', 'd', 'e']; // b c d e
+li.shift();
+alert(li);
+
+var li = ['a', 'b', 'c', 'd', 'e']; // a b c d
+li.pop();
+alert(li);
+
+var li = ['c', 'e', 'a', 'b', 'd']; // a b c d e
+li.sort();
+alert(li);
+
+var li = ['c', 'e', 'a', 'b', 'd']; // d b a e c
+li.reverse();
+alert(li);
