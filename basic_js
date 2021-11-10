@@ -216,3 +216,42 @@ grades.show();
 
 모듈
 순수 Javascript는 모듈이라는 개념이 분명하게 존재하지 않지만, 호스트 환경에 따라 다른 모듈화 방법이 제공된다.
+
+- greeting.js
+function welcome(){
+    return 'Hello world';
+}
+
+- main.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="greeting.js"></script> // js파일 다운로드
+</head>
+<body>
+    <script>
+        alert(welcome()); //js파일의 function
+    </script>
+</body>
+</html>
+
+node.js에서의 모듈 
+
+- node.circle.js
+var PI = Math.PI;
+  
+exports.area = function (r) { //area function exports
+return PI * r * r;
+};
+  
+exports.circumference = function (r) { //circumference function exports
+return 2 * PI * r;
+};
+
+node.demo.js
+var circle = require('./node.circle.js'); //import node.circle.js -> circle
+console.log( 'The area of a circle of radius 4 is '
+           + circle.area(4)); // 적용
+           
+           
