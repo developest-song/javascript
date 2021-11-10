@@ -188,3 +188,31 @@ alert(li);
 var li = ['c', 'e', 'a', 'b', 'd']; // d b a e c
 li.reverse();
 alert(li);
+
+객체
+var grades = {}; // new Object();
+grades['egoing'] = 10;
+grades['k8805'] = 6;
+grades['sorialgi'] = 80;
+
+var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
+alert(grades['sorialgi']);
+alert(grades.k8805);
+
+var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
+for(key in grades) {
+    document.write("key : "+key+" value : "+grades[key]+"<br />");
+}
+
+var grades = {
+    'list': {'egoing': 10, 'k8805': 6, 'sorialgi': 80},
+    'show' : function(){
+        for(var name in this.list){
+            document.write(name+':'+this.list[name]+"<br />");
+        }
+    }
+};
+grades.show();
+
+모듈
+순수 Javascript는 모듈이라는 개념이 분명하게 존재하지 않지만, 호스트 환경에 따라 다른 모듈화 방법이 제공된다.
