@@ -146,4 +146,168 @@ switch(test){
     console.log('except text');
 }
 
-56:35 부터
+함수
+let test = 'Hello'; // 전역변수
+function sayHello(name){
+  let msg = `Hello, `; //지역변수
+  if(name){
+    msg = `Hello, ${name}`;
+  }
+  console.log(msg);
+}
+
+sayHello();
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+let msg = "Welcome";
+
+function sayHello(name){
+  let msg = "Hello"
+  console.log(msg + " " + name); //지역변수의 msg
+}
+
+sayHello("mike");
+console.log(msg); //전역변수의 msg
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+function sayHello(name){// name에 default값 설정 가능 
+  let newName = name || 'friend'; // or로 
+  let msg = `Hello, ${newName}`;
+
+  console.log(msg);
+}
+
+sayHello();
+
+return 
+- 함수의 종료 목적으로도 사용
+- return 정의를 안해도 undefined를 반환 or return;으로 끝나거나
+
+함수 선언문
+sayHello(); // 어디서든 호출가능
+            // 호이스팅(hoisting) - 자바스크립트는 모든 함수 선언문을 찾아 미리 선언해둠
+function sayHello(){
+  console.log('Hello');
+}
+
+함수 표현식
+let sayHello = function(){ //코드에 도달하면 생성
+  console.log('Hello');
+}
+sayHello();
+
+화살표 함수
+변경 전
+let add = function(num1, num2){
+ return num1 + num2;
+}
+변경 후 
+let add = (num1, num2) => num1 + num2;
+// return이 한 줄일 경우 {} 생략가능
+
+객체
+
+const superman = {
+  name : 'clark',
+  age : 33,
+}
+
+// 접근 superman.name
+// 접근 superman['age']
+
+// 추가 superman.gender = 'male';
+// 추가 superman.['hairColor'] = 'black';
+
+// 삭제 delete superman.hairColor;
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+const name = 'clark';
+const age = 33;
+const superman = {
+  name, // 가능 (clark)
+  age, // 33
+  gendre: 'male',
+}
+
+console.log(superman.name);
+
+superman.birthDay // 존재하지 않는 프로퍼티에 접근할 경우 undefined 출력
+'age' in superman; // true
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+const superman = {
+  name : 'clark',
+  age : 33,
+}
+
+for(let key in superman){
+  console.log(key + ":" + superman[key])
+}
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+function isAdult(user){
+  if (!('age' in user) || user.age < 20){
+    return false;
+  }
+  return true;
+}
+
+const Mike = {
+  name: "mike",
+  age: 30
+}
+
+const Jane = {
+  name: "jane"
+}
+
+console.log(isAdult(Jane))
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+const Mike = {
+  name: "mike",
+  age: 30
+}
+
+for(x in Mike){
+ console.log(Mike[x])
+}
+
+객체 + method
+let boy = {
+  name: "Mike",
+  showName(){
+   console.log(this.name) 
+  }
+}
+
+let man = boy; //boy를 man으로 정의
+boy = null; // boy를 null
+
+man.showName(); //this 덕분에 name은 남아있음
+
+화살표 함수는 일반 함수와는 달리 자신만의 this를 가지지 않음
+화살표 함수 내부에서 this를 사용하면, 그 this는 외부에서 값을 가져옴 // 브라우저 환경 :window, node js : global
+let boy = {
+  name: "Mike",
+  showThis: () =>{
+   console.log(this) 
+  }
+}
+
+boy.sayThis();
+
+
+배열
+let student = ['a','b',...'z']; 0부터 시작
+배열에 문자 숫자 객체 함수 등 포함 가능
+student.length 길이 반환
+push() 끝 추가 (여러개 가능)
+pop() 끝 제거
+unshift 앞 추가 (여러개 가능)
+shift 앞 제거
+
+let days = ['월','화','수'];
+
+for(let day of days){ //of
+  console.log(day) //월 화 수 출력
+}
+
+for(let day in days){ //in
+  console.log(day) // index 0 1 2 출력
+}
