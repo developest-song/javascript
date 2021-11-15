@@ -1,0 +1,144 @@
+변수
+- 비교 : let const (ES6부터 생긴 것) var (이전 것)
+
+var는 한번 선언된 변수를 다시 선언할 수 있다.
+var name = 'Mike';
+console.log(name); // Mike
+var name = 'Jane';
+console.log(name); // Jane
+
+let은 한번 선언된 변수를 다시 선언할 수 없다.
+let name = 'Mike';
+console.log(name); // Mike
+let name = 'Jane';
+console.log(name); // Jane
+
+
+
+
+호이스팅 - 스코프 내부 어디서든 변수 선언은 최상위에 선언된 것처럼 행동
+console.log(name); // undefined (선언은 호이스팅 되지만 할당은 호이스팅 되지 않음)
+var name; // 호이스팅 가능
+
+console.log(name); // ReferenceError
+let name; // TDZ(Temporal Dead Zone) 때문에 
+
+let, const는 TDZ에 영향을 받는다
+할당하기 전에 사용할 수 없다. -> 코드를 예측가능하게 하고, 잠재적인 버그를 줄임
+
+let age =30;
+function showAge(){
+  console.log(age); // 호이스팅을 일으키나 TDZ의 영향을 받아 error
+  let age=20; // 만약 호이스팅을 일으키지 않았으면 외부 age를 받아서 찍었을 것
+}
+showAge();
+
+
+
+var
+1. 선언 및 초기화 단계
+2. 할당 단계
+
+let
+1. 선언 단계
+2. 초기화 단계
+3. 할당 단계
+
+const
+1. 선언 + 초기화 + 할당
+
+ex)
+let name;
+name = 'mike';
+
+var age;
+age = 30;
+
+const gender; // error 할당하지 않아서
+gender = 'male';
+
+
+
+var  함수 스코프 - 함수 밖에서 사용 불가
+let, const 블록 스코프 - (함수, if문, for문, while문, try/catch문 등) 밖에서 사용 불가
+
+
+
+생성자 함수
+function Item(title, price){ // 첫 글자를 대문자로 하여금 생성자 함수라 나타냄
+  // this = {};
+  this.title = title;
+  this.price = price;
+  this.showPrice = function(){
+    console.log(`가격은 ${price}원 입니다`);
+  }
+  // return this;
+}
+
+const item1 = new Item('인형', 3000); // new를 붙여서 만듬
+const item2 = new Item('가방', 4000);
+const item3 = new Item('지갑', 5000);
+
+console.log(item1, item2, item3);
+
+item3.showPrice(); 
+
+
+
+
+computed property(계산된 프로퍼티)
+let n = "name";
+let a = "age";
+
+const user = {
+  [n] : "Mike", // n의 값이 들어감
+  [a] : 30,
+  [1 + 4]:5
+}
+console.log(user);
+
+
+
+function makeObj(key, val){
+  return {
+    [key] : val
+  }
+}
+
+const obj = makeObj('나이',33); // 어떤 것을 key로 사용할지 모를 때도 사용
+console.log(obj);
+
+
+
+객체 메소드 
+const user = {
+  name:'Mike',
+  age:30,
+}
+
+const user2 = Object.assign({}, user); // 객체 복사 deep copy 개념
+                                        // {} 초기값 -> gender:"male" 같은것 추가 가능, 
+                                        // Object.assign(user, info1, info2) 해서 하나의 객체로 합치는 것 가능
+console.log(user2);
+
+const result = Object.keys(user); // key값을 배열로 return
+console.log(result);
+
+const result2 = Object.values(user); // value값을 배열로 return
+console.log(result2);
+
+const result3 = Object.entries(user); // key, value를 한 묶음으로 배열로 return -> 이중배열
+console.log(result3);
+
+
+
+let arr = [
+  ['mon', '월'],
+  ['tue','화']
+]
+
+const result = Object.fromEntries(arr); // 배열로 객체 만드는 메소드
+console.log(result);
+
+
+19:14
