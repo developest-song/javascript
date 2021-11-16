@@ -140,5 +140,133 @@ let arr = [
 const result = Object.fromEntries(arr); // 배열로 객체 만드는 메소드
 console.log(result);
 
+심볼 ( 자료형 )*********
+const a = Symbol(); // new를 붙이지 않습니다.
+const b = Symbol(); // 유일한 식별자
 
-19:14
+console.log(a) 
+console.log(b)
+
+a===b // false
+a==b // false
+
+Symbol : 유일성 보장
+
+  property key : 심볼형
+const id = Symbol('id'); // id는 설명을 붙여줄 수 있음 
+
+const user = {
+  name : 'mike',
+  age : 30,
+  [id] : 'myid' // computed property 
+}
+
+console.log(user); // Symbol(id): "myid"도 같이 찍힘 ??? **
+
+const result = Object.keys(user); // symbol없이 name, age만 찍힘 
+const result2 = Object.values(user); // symbol없이 mike, 30만 찍힘
+const result3 = Object.entries(user); // symbol없이 key, value만 찍힘
+for(let a in user){} // 위와 같이 symbol 안찍힘 
+
+\\\\\\\\\\\\\\\\\\\
+const user = {
+  name : 'mike',
+  age : 30,
+}
+
+const id = Symbol('id');
+user[id] = 'myid'; // 특정 개체에 원본데이터를 건드리지 않고 Symbol로써 속성을 추가할 수 있음
+\\\\\\\\\\\\\\\\\\\\\\\\
+Symbol.for() : 전역 심볼
+하나의 심볼만 보장받을 수 있음
+없으면 만들고 있으면 가져오기 때문에
+Symbol 함수는 매번 다른 Symbol 값을 생성하지만, 
+Symbol.for 메소드는 하나의 생성한 뒤 키를 통해 같은 Symbol을 공유
+
+const id1 = Symbol.for('id');
+const id2 = Symbol.for('id'); // id === id2; <- true
+
+Symbol.keyFor(id1) // 이름을 알려줌, 전역 심볼만 사용가능
+
+const id = Symbol('id 입니다');
+id.description; // Symbol의 이름 id 입니다
+
+Object.getOwnPropertySymbols(user); // 심볼 키만 보여줌
+Reflect.ownKeys(user); // 심볼 키를 포함한 모든 키를 보여줌
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// 다른 개발자가 만들어 놓은 객체
+const user = {
+  name : 'mike',
+  age : 30,
+}
+//내가 작업
+//user.showName = function(){}; // 밑에 for 구문에 영향이 가는 부분
+const showName = Symbol('show name'); // 심볼을 선언하고
+user[showName] = function(){ // 심볼을 이용해 심볼 키를 만듬
+  console.log(this.name);
+}
+
+user[showName](); // this.name으로 mike가 정상적으로 출력됨
+
+// 사용자가 접속하면 보는 메세지
+for (let key in user){ // 심볼로 만들어진 키는 for에는 걸리지 않기 때문에 정상적으로 출력
+  console.log(`His ${key} is ${user[key]}.`);
+}
+
+ Number, Math
+let num = 10;
+num.toString(); // 그냥 문자로 변환 '10'
+num.toString(2); // 2진수로 변환 '1010'
+
+let num2 = 255;
+num2.toString(16); // 16진수로 변환 'ff'
+
+Math.PI; // 3.141592653589793
+
+Math.ceil() // 올림
+Math.floor() // 내림
+Math.round() // 반올림
+
+let userRate = 30.1234;
+
+Math.round(userRate * 100) / 100 // 30.12 숫자반환
+userRate.toFixed(2); // '30.12' 문자반환
+Number(userRate.toFixed(2)); // 30.12
+
+isNaN()
+let x = Number('x'); //NaN
+
+console.log(x); // NaN
+console.log(isNaN(x)); // true
+NaN은 isNaN으로만 확인 가능   NaN == NaN // false
+
+parseInt()
+let margin = '10px';
+console.log(parseInt(margin)); // 10
+처음부터 읽을 수 있는 곳까지 읽고 숫자로 반환
+처음부터 문자일경우 NaN반환
+
+let redColor = 'f3';
+parseInt(redColor,16) // 243 .. 16진수 -> 10진수
+
+parseInt('11',2) // 3 .. 2진수 -> 10진수
+
+parseFloat()
+let padding = '18.5%';
+parseInt(padding) // 18
+parseFloat(padding) // 18.5
+
+Math.random() 0~1랜덤 수
+Math.floor(Math.random()*100)+1 // 1~100 랜덤 수
+
+Math.max() / Math.min() 
+괄호 안의 인수 중 최대 최소 값
+
+Math.abs() 절대값
+
+Math.pow(n,m) 거듭제곱 값 
+
+Math.sqrt() 제곱근
+
+31:39
