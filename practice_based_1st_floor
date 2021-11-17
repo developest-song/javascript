@@ -1,6 +1,6 @@
 - let (변할 수 있는 값 선언)
 let name = "Mike";
-let nmae = "google"; // error
+let name = "google"; // error
 
 name = "naver"; // 가능
 
@@ -223,7 +223,7 @@ const age = 33;
 const superman = {
   name, // 가능 (clark)
   age, // 33
-  gendre: 'male',
+  gender: 'male',
 }
 
 console.log(superman.name);
@@ -290,7 +290,7 @@ let boy = {
   }
 }
 
-boy.sayThis();
+boy.showThis();
 
 
 배열
