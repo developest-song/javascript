@@ -624,4 +624,168 @@ user = { //위의 주석과 동일한 결과
 
 console.log(user)
 
-1:18:15
+클로저
+함수와 Lexical 환경의 조합
+함수가 생성될 당시의 외부 변수를 기억
+생성 이후에도 계속 접근 가능
+
+ex1)
+// Lexical 환경에 올라감 one:초기화x, 사용불가, addOne: 사용 가능
+let one; // undefined 사용가능
+one = 1;
+
+function addOne(num){
+  console.log(one + num); // 내부에서 먼저 찾고 외부로 찾아감 
+}
+
+addOne(5); // 내부 Lexical 환경 num 5
+
+ex2)
+function makeAdder(x){
+  return function(y){
+    return x + y;
+  }
+}
+
+const add3 = makeAdder(3);
+console.log(add3(2)); //5
+// add3 함수가 생성된 이후에도 상위함수인 makeAdder의 x에 접근 가능
+
+const add10 = makeAdder(10);
+console.log(add10(5)); // 15
+console.log(add3(1)); // 4
+
+ex**)
+function makeCounter() {
+  let num = 0; // 은닉화 **
+  
+  return function(){
+    return num++;
+  }
+}
+
+let counter = makeCounter(); 
+console.log(counter()); // 0
+console.log(counter()); // 1
+console.log(counter()); // 2
+// num을 다른 숫자로 임의로 변경 불가능 
+
+// setTimeout - 일정 시간이 지난 후 함수를 실행
+function showName(name){
+  console.log(name);
+}
+
+setTimeout(showName, 3000, 'Mike');
+          // 함수    시간=3s, 인수
+// clearTimeout(x); 예정된 작업을 없앰 
+
+
+// setinerval - 일정 시간 간격으로 함수를 반복
+ex1)
+function showName(name){
+  console.log(name);
+}
+
+const tId = setInterval(showName, 3000, 'Mike');
+clearInterval(tId); // 실행 중단
+ex2)
+let num = 0;
+
+function showTime(){
+  console.log(`안녕하세요 .접속하시진 ${num++}초가 지났습니다.`);
+  if(num > 5){
+    clearInterval(tId);
+  }
+}
+
+const tId = setInterval(showTime, 1000);
+
+
+
+//call, apply, bind
+ 함수 호출 방식과 관계없이 this를 지정할 수 있음
+ex1)
+const mike = {
+  name: 'Mike',
+}
+const tom = {
+  name: 'Tom',
+}
+
+function showThisName(){ // this 사용
+  console.log(this.name)
+}
+
+showThisName();
+showThisName.call(mike); // Mike
+showThisName.call(tom); // Tom
+
+function update(birthYear, occupation){ // mike update
+  this.birthYear = birthYear;
+  this.occupation = occupation;
+}
+
+update.call(mike, 1999, 'singer');
+console.log(mike);
+
+update.call(tom, 2002, 'teacher');
+console.log(tom);
+// 위, 아래 동일 결과
+update.apply(mike, [1999, 'singer']);
+console.log(mike);
+
+update.apply(tom, [2002, 'teacher']);
+console.log(tom);
+
+ex2)
+// apply: 배열 요소를 함수 매개변수로 사용할 때 유용
+const nums = [3, 10, 1, 6, 4]
+
+// call과 apply는 동작방식은 같고, 매개변수를 받는 방법이 다름
+// call은 직접 받고 apply는 배열형태로 받음
+
+const minNum = Math.min.apply(null, nums);
+// = Math.min.apply(null, [3, 10, 1, 6, 4])
+
+const maxNum = Math.min.call(null, ...nums);
+// = Math.max.apply(null, 3, 10, 1, 6, 4)
+
+console.log(minNum);
+console.log(maxNum);
+
+ex3)
+//bind: 함수의 this를 영구히 바꿀수 있음
+const mike = {
+  name: 'Mike',
+}
+
+function update(birthYear, occupation){ // mike update
+  this.birthYear = birthYear;
+  this.occupation = occupation;
+}
+
+const updateMike = update.bind(mike);
+
+updateMike(1980, 'police');
+console.log(mike);
+
+ex4)
+const user = {
+  name: 'Mike',
+  showName: function(){
+    console.log(`hello, ${this.name}`)
+  },
+}
+
+user.showName();
+let fn = user.showName;
+fn(); // this를 잃어버림
+
+fn.call(user);
+fn.apply(user);
+
+let boundFn = fn.bind(user); // call, apply는 안됨
+boundFn();
+
+1:33:45
+
