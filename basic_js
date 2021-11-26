@@ -308,3 +308,151 @@ https://regexr.com/   패턴과 String이 match되는지 확인해줌
 \b word boundary (띄어쓰기 기준으 단어 구분자)
 (?:https?) - (?:xx) 그룹 검색, s? s가 올수도 안올수도, ://, [a-z0-9-+&@#\/%?=~_|!:,.;]* 0개이상
 
+스코프
+var vscope = 'global';
+function fscope(){
+  var vscope = 'local' // * var를 붙이지 않으면 전역변수가 된다. 
+  console.log(`함수안 ${vscope}`); // 지역변수 호출
+}
+
+fscope();
+console.log(`함수밖 ${vscope}`); // 전역변수 호출
+
+// 불가피하게 전역변수를 사용할 경우 객츼 속성 관리하는 방법
+MYAPP = {}
+MYAPP.calculator ={
+  'left' : null,
+  'right' : null
+}
+
+MYAPP.coordinate = {
+  'left' : null,
+  'right' : null
+}
+
+MYAPP.calculator.left = 10;
+MYAPP.calculator.right = 20;
+function sum(){
+  return MYAPP.calculator.left + MYAPP.calculator.right;
+}
+
+console.log(sum());
+
+렉시컬 스코프
+var i = 5;
+function a(){
+  var i = 10;
+  b();
+}
+
+function b(){
+  console.log(i);
+}
+
+a();
+
+값으로서의 함수
+js의 함수가 다른 언어의 함수와 다른 점은 함수가 값이 될 수 있다는 점
+function cal(func, num){
+  return func(num)
+}
+function increase(num){
+    return num+1
+}
+function decrease(num){
+    return num-1
+}
+alert(cal(increase, 1)); // cal 에 increase, 1 전달   increase() 호출
+alert(cal(decrease, 1));
+
+// 함수를 함수의 리턴 값으로 사용 
+function cal(mode){
+    var funcs = {
+        'plus' : function(left, right){return left + right},
+        'minus' : function(left, right){return left - right}
+    }
+    return funcs[mode];
+}
+console.log(cal('plus')(2,1));
+console.log(cal('minus')(2,1));   
+
+// 배열의 값으로 사용
+var process = [
+    function(input){ return input + 10;},
+    function(input){ return input * input;},
+    function(input){ return input / 2;}
+];
+var input = 1;
+for(var i = 0; i < process.length; i++){
+    input = process[i](input);
+}
+console.log(input);
+
+콜백
+
+function sortNumber(a,b){
+  return b-a; // 내림차순정렬
+}
+
+let numbers = [20,10,9,8,7,6,5,4,3,2,1];
+console.log(numbers.sort(sortNumber)); 
+
+비동기 처리 
+특정 코드의 연산이 끝날 때까지 코드의 실행을 멈추지 않고 다음 코드를 먼저 실행하는 자바스크립트의 특성
+
+console.log('Hello') // 1
+
+setTimeout(function(){ // 3
+  console.log('Bye')
+}, 3000)
+
+console.log('Hello Again') // 2
+setTimeout()이 비동기 방식으로 실행되기 때문에 Hello Again이 먼저 출력됨
+
+내부 함수
+function outter(){
+    var title = 'coding everybody';  
+    function inner(){        
+        alert(title); // 외부 함수의 title 지역변수 접근 가능
+    }
+    inner();
+}
+outter();
+
+클로저
+내부함수가 외부함수의 지역변수에 접근할 수 있고, 외부함수는 외부함수의 지역변수를 사용하는 내부함수가 소멸될 때까지 소멸되지 않는 특성을 의미한다.
+ex1)
+function outter(){
+    var title = 'coding everybody';  
+    return function(){        
+        alert(title);
+    }
+}
+inner = outter(); // outter 실행
+inner(); // outter 실행이 끝나고 inner실행이 되며, title이 소멸되야하지만 소멸되지 않음으로써 coding everybody가 출력됨
+
+ex2)
+// js는 기본적으로 Private한 속성을 지원하지 않는데, 클로저의 이러한 특성을 이용해서 Private한 속성을 사용할 수 있게 된다.
+function factory_movie(title){
+  return { // 객체 반환
+    get_title : function(){ // 지역변수 title 사용
+      return title;
+    },
+    set_title : function(_title){ 
+      title = _title
+    }
+  }
+}
+
+ghost = factory_movie('Ghost in the shell');
+matrix = factory_movie('Matrix');
+
+console.log(ghost.get_title());
+console.log(matrix.get_title());
+
+ghost.set_title('공각기동대'); // get, set_title의 title이 동일
+
+console.log(ghost.get_title());
+console.log(matrix.get_title());
+
+arguments
