@@ -512,4 +512,86 @@ console.log(sum.apply(o1)) // 6
 console.log(sum.apply(o2)) // 185
 + https://beomy.tistory.com/4 // call & apply 참고 
 
+this 객체
 
+this가 만들어지는 경우,
+1. 일반 함수에서 this -> window
+
+2. 중첩 함수에서 this -> window
+
+3. 이벤트에서 this -> 이벤트 객체
+
+4. 메소드에서 this -> 메소드 객체
+
+5. 메소드 내부의 중첩 함수에서 this -> window
+
+* 일반 함수 this
+var data = 10;    // 1 
+function outer() { 
+  this.data = 20; // 2
+  data = 30;      // 3
+  console.log("1. data = " + data);  // 30
+  console.log("2. this.data = " + this.data);  // 30
+  console.log("3. window.data = " + window.data); // 30
+  // 지역변수를 찾고 없으면 outer()를 호출한 영역에서 찾음
+} 
+outer();
+
+* 일반 중첩 함수 this
+var data = 10;    // 1 
+function outer() { 
+  function inner() {
+    this.data = 20; // 2
+    data = 30;      // 3
+    console.log("1. data = " + data);  // 30
+    console.log("2. this.data = " + this.data);  // 30
+    console.log("3. window.data = " + window.data); // 30
+  }
+  inner();
+} 
+outer();
+
+
+* 이벤트 리스너 this
+var data = 10; // 1 
+$("#myButton").click(function () { 
+  this.data = 20; // 2 
+  data = 30; // 3 
+  console.log("1. data = " + data); // 30
+  console.log("2. this.data = " + this.data); // 20 this는 이벤트를 발생시킨 객체가 된다.
+  console.log("3. window.data = " + window.data); // 30
+});
+
+* 메소드 this
+var data = 10; // 1 
+function MyClass () {
+  this.data = 0; 
+} 
+MyClass.prototype.method1 = function () {
+  this.data = 20; // 2 
+  data = 30; // 3 
+  console.log("1. data = " + data); // 30
+  console.log("2. this.data = " + this.data); // 20 객체의 프로퍼티
+  console.log("3. window.data = " + window.data); // 30
+} 
+var my1 = new MyClass(); // my1은 객체
+my1.method1(); // method1은 메소드 
+
+* 메소드 내부 중첩 함수 this
+var data = 10;      // 1 
+function MyClass () {
+  this.data = 0; 
+} 
+MyClass.prototype.method1 = function () {
+  function inner() { 
+    this.data = 20; // 2 
+    data = 30;      // 3 
+    console.log("1. data = " + data); // 30
+    console.log("2. this.data = " + this.data); // 30
+    console.log("3. window.data = " + window.data); // 30
+  } // 객체의 메소드 내부에서 만들어지는 중첩 함수에서 this는
+  // 객체가 아닌 window가 된다.
+  inner();
+} 
+var my1 = new MyClass(); // my1은 객체
+my1.method1(); // method1은 메소드 
