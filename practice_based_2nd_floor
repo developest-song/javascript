@@ -895,4 +895,77 @@ js는 이를 편리하게 확인할 수 있는 instanceof 연산자가 있음
 객체와 생성자를 비교할수있고 해당객체가 그 생성자로부터 생성된 것인지를
 판단해서 true/false 반환
 
-1:42:57
+** 클래스
+// 생성자와 class의 비교 
+const User = function (name, age) {
+  this.name = name;
+  this.age = age;
+  // this.showName = function() {
+  //   console.log(this.name)
+  // }
+}
+
+User.prototype.showName = function(){
+  console.log(this.name); // 이렇게 바꾸면 class처럼 prototype으로 변형할 수 있음
+}
+
+const mike = new User('Mike', 30);
+// const mike = User('Mike', 30); // undefined 문제가 없음.
+
+for(const p in mike){
+  console.log(p); // name, age, showName
+}
+
+
+class User2 {
+  constructor(name, age){ // 객체를 만들어주는 생성자 메소드
+    this.name = name; // constructor가 class라는 것이 명시 되어 있고 이 경우에 new없이 호출 시 에러 발생 되도록 설계 
+    this.age = age;
+  }
+  showName() { // User2에 prototype으로 저장됨
+    console.log(this.name);
+  }
+}
+
+const tom = new User2('Tom', 19);
+// const tom = User2('Tom', 19); // type error가 발생 
+for(const p in tom){ // class의 메소드는 for in 문에서 제외됨
+  console.log(p); // name, age  
+}
+
+
+// 생성자함수의 경우 prototype으로 상속을 구현
+// class의 상속 : extends
+class Car {
+  constructor(color){ // {} 빈객체로 만들어주고 this로 이 객체를 가르키게 된다.
+    this.color = color;
+    this.wheels = 4;
+  }
+  drive(){
+    console.log("drive..");
+  }
+  stop(){
+    console.log("STOP!");
+  }
+}
+
+class Bmw extends Car{
+  // constructor가 없을 경우 있는 것처럼 동작을 한다.
+  // 자식은 부모를 무조건 호출해야 한다.
+  constructor(color){ // constructor 오버라이딩, 부모 constructor처럼의 작업을 건너뛴다. 그래서 부모의 것을 호출 필요
+    super(color); // 부모의 것을 호출
+    this.navigation = 1;
+  }
+  park(){
+    console.log("PARK");
+  }
+  // 메소드 오버라이딩(method overriding)
+  stop(){ // 부모의 메소드와 동일한 이름으로 메소드를 정의하면 덮어쓰게됨
+    super.stop(); // 부모의 메소드를 그대로 사용하면서 확장하고 싶다면 super 사용
+    console.log("OFF");
+  }
+}
+
+const z4 = new Bmw("blue");
+
+1:53:06
