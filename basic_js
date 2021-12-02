@@ -595,3 +595,97 @@ MyClass.prototype.method1 = function () {
 } 
 var my1 = new MyClass(); // my1은 객체
 my1.method1(); // method1은 메소드 
+
+
+객체 
+var person = {
+  'name' : 'egoing',
+  'introduce' : function(){
+    return 'My name is ' + this.name;
+  }
+}
+console.log(person.introduce());
+
+객체의 구조를 재활용할 수 있는 방법이 생성자
+
+생성자 // 2014년 강의라 ES6가 아님. class의 설명이 없음
+function person(name){
+  this.name = name;
+  this.introduce = function(){
+    return 'My name is ' + this.name;
+  }
+}
+let p1 = new person('Song');
+console.log(p1.introduce());
+
+let p2 = new person('Lee');
+console.log(p2.introduce());
+
+
+전역 객체
+function func(){
+  console.log('Hello');
+}
+func();
+window.func();
+// 모든 전역변수와 함수는 window 객체의 property이다. 객체를 명시하지 않으면 암시적으로 window의 property로 간주된다.
+
+var o = {
+  'func':function(){
+    console.log('Hello_2');
+  }}
+o.func();
+window.o.func();
+// 웹브라우저에서 전역객체는 window
+// node.js에서는 global
+
+//?????
+function Func(){
+    console.log(o);
+}
+var o = new Func();
+
+var o = {}
+var p = {}
+function func(){
+    switch(this){
+        case o:
+            document.write('o<br />');
+            break;
+        case p:
+            document.write('p<br />');
+            break;
+        case window:
+            document.write('window<br />');
+            break;          
+    }
+}
+func();
+func.apply(o); // apply를 이용한 func의 this 제어
+func.apply(p);
+
+상속
+function Person(name){
+  this.name = name;
+}
+
+Person.prototype.name = null // prototype 선언
+Person.prototype.introduce = function(){
+  return 'My name is ' + this.name;
+}
+
+function Programmer(name){ // 생성자 만듬 
+  this.name = name;
+}
+
+Programmer.prototype = new Person(); // Person과 연결
+Programmer.prototype.coding = function(){
+  return "Hello world" // 새로운 기능 추가 
+}
+
+var p1 = new Programmer('egoing');
+console.log(p1.introduce()) // Person의 introduce 사용 가능
+console.log(p1.coding())
+
+
+prototype
