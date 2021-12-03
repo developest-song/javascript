@@ -689,3 +689,47 @@ console.log(p1.coding())
 
 
 prototype
+객체의 원형, 함수는 객체 그러므로 생성자로 사용될 함수도 객체다. 객체는 프로퍼티를 가질 수 있는데 prototype이라는 프로퍼티는 그 용도가 약속되어 있는 특수한 프로퍼티다
+prototype에 저장된 속성들은 생성자를 통해서 객체가 만들어질 때 그 객체에 연결된다.
+function Ultra(){}
+Ultra.prototype.ultraProp = true;
+ 
+function Super(){}
+Super.prototype = new Ultra();
+ 
+function Sub(){}
+Sub.prototype = new Super();
+ 
+var o = new Sub();
+console.log(o.ultraProp); // true
+
+prototype 체인으로 sub와 ultra가 연결되어 있기 때문
+o -> Sub -> Super -> Ultra -> Ultra.prototype.ultraProp (= prototype chain)
+
+표준 내장 객체 - js가 기본적으로 가지고 있는 객체들을 의미
+Object
+Function
+Array
+String
+Boolean
+Number
+Math
+Date
+RegExp
+
+var arr = new Array('seoul','new york','ladarkh','pusan', 'Tsukuba');
+function getRandomValueFromArray(haystack){
+    var index = Math.floor(haystack.length*Math.random());
+    return haystack[index]; 
+}
+console.log(getRandomValueFromArray(arr));
+
+위의 코드가 아래의 코드로 바꾸어 사용할 수 있음 
+이 차이는 arr에 내장된 메소드인 것처럼 function의 기능을 사용하도록 바꾼 것 
+
+Array.prototype.rand = function(){ // prototype의 사용
+    var index = Math.floor(this.length*Math.random());
+    return this[index];
+}
+var arr = new Array('seoul','new york','ladarkh','pusan', 'Tsukuba');
+console.log(arr.rand());
