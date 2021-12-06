@@ -733,3 +733,60 @@ Array.prototype.rand = function(){ // prototype의 사용
 }
 var arr = new Array('seoul','new york','ladarkh','pusan', 'Tsukuba');
 console.log(arr.rand());
+
+
+Object 객체
+객체의 가장 기본적인 형태를 가지고 있는 객체. 
+아무것도 상속받지 않는 순수한 객체, 값을 저장하는 기본적인 단위
+var grades = { 'egoing':10, 'k8805':6, 'sorialgi':80 };
+자바스크립트의 모든 객체는 Object 객체를 상속 받는데, 그런 이유로 모든 객체는 Object 객체의 프로퍼티를 가지고 있다.
+또한 Object 객체를 확장하면 모든 객체가 접근할 수 있는 API를 만들 수 있다.
+
+
+ex)
+Object.prototype.contain = function(neddle) {
+  for(var name in this){
+    if(this[name] === neddle) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//객체 o에 egoing이 들어있냐를 확인
+var o = {'name':'egoing', 'city':'seoul'} // typeof o Object
+console.log(o.contain('egoing'));
+var a = ['egoing', 'leezche','grapittie']; // typeof a Object
+console.log(o.contain('egoing'));
+
+Object 객체의 확장은 하지 않는 것이 바람직하다. 모든 객체에 영향을 주기 때문이다
+for(var name in o){
+  if(o.hasOwnProperty(name))
+    console.log(name); // 위의 코드(확장 후)실행 후 name객체를 확인하면 contain이 포함되어 있다.
+}// 객체.hasOwnProperty(??)를 사용하면 해당 객체의 소속인지를 확인할 수 있다. prototype으로 상속받았을 시 false가 됨
+
+
+데이터 타입
+원시 데이터 타입(객체가 아닌 데이터 타입) : Number, String, Boolean, null, undefined 
+그 외의 모든 데이터 타입들은 객체다
+
+
+var str = 'coding';
+console.log(str.length); // 6
+console.log(str.charAt(0)) // 'c'
+//내부적으로 문자열이 원시 데이터 타입이고 문자열과 관련된 어떤 작업을 하려고 할 때 자바스크립트는 임시로 문자열 객체를 만들고 사용이 끝나면 제거한다.
+//그래서 str은 프로퍼티와 메소드가 있지만 내부의 동작이 다르고 결국 객체라 부르지 않는다.
+
+str.prop = 'everyday'
+console.log(str.prop); // undefined
+// str.prop을 하는 순간에 내부적으로 String 객체가 만들어지고 저장되며 곧 제거 된다. 결국 undefined가 출력된다.
+// 하지만 기능적으로 객체로 사용해야 할 경우가 생길 때를 대비 하여 원시 데이터 형을 객체처럼 다룰 수 있도록 하는 레퍼 객체가 있다.
+// 레퍼 객체는 String, Number, Boolean이 있고, null과 undefined는 존재하지 않는다.
+
+
+참조
+
+
+
+
+
